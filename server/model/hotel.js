@@ -58,7 +58,7 @@ const HotelSchema = new mongoose.Schema(
 
 HotelSchema.methods.toJSON = function (){
     return{
-        _id: this._id,
+        id: this._id,
         image: this.image,
         roomType: this.roomType,
         address: this.address,

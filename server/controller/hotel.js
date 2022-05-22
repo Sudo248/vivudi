@@ -56,14 +56,14 @@ module.exports.createHotel = asyncHandler(async function(req, res, next){
     const hotel = await Hotel.create(hotelInfo);
 
     if(!hotel){
-        return next('Error create hotel', 401);
+        return next(ErrorResponse('Error create hotel', 401));
     }
 
     res
     .status(201)
     .json({
         success: true,
-        hotelId: hotel.id
+        hotel
     });
 
 });
@@ -103,7 +103,7 @@ module.exports.deleteHotel = asyncHandler(async function(req, res, next){
     const hotelDelete = await Hotel.findByIdAndRemove(hotelId);
 
     if(!hotelDelete){
-        return next(`Error delete hotel ${hotelId}`, 401);
+        return next(ErrorResponse(`Error delete hotel ${hotelId}`, 401));
     }
 
     res
