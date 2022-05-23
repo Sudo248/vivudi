@@ -15,6 +15,4 @@ void setupServiceLocator(){
   getIt.registerLazySingleton<NetworkService>(() => NetworkService());
 
 
-
-
 }
