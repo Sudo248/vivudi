@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:vivudi/base/bloc_base.dart';
 import 'package:vivudi/model/login/login_request.dart';
 import 'package:vivudi/repositories/user_repository.dart';
+import 'package:vivudi/routes/app_route.dart';
 
 class LoginBloc extends BlocBase{
 
@@ -30,6 +31,7 @@ class LoginBloc extends BlocBase{
     LoginRequest request = LoginRequest(email: emailCtrl.text, password: passwordCtrl.text);
     final response = await userRepo.login(request);
     if(response.success){
+      navigator.navigateOff(AppRoute.onboarding);
       print("login success");
     }else{
       print("login error");

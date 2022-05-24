@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vivudi/pages/onboarding/onboarding_page.dart';
 import 'package:vivudi/pages/splash/splash_page.dart';
 import 'package:vivudi/routes/app_route.dart';
 
@@ -13,6 +14,8 @@ abstract class AppPages {
       case AppRoute.detailRoom:
         var hotelId = route.arguments as String;
         return MaterialPageRoute(builder: (context) => DetailHotel(hotelId: hotelId));
+      case AppRoute.onboarding:
+        return MaterialPageRoute(builder: (context) => const Onboarding());
       default:
         return MaterialPageRoute(builder: (context) => SplashPage());
     }
