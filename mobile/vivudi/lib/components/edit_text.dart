@@ -80,7 +80,7 @@ class EditText extends StatefulWidget {
 class _EditTextState extends State<EditText> {
   bool _showPassword = false;
 
-  Widget _getPasswordButton() {
+  Widget _getPasswordButton(Color? primaryColor) {
     if (!widget.isPassword) return const SizedBox.shrink();
     return IconButton(
       onPressed: () => setState(() {
@@ -90,11 +90,12 @@ class _EditTextState extends State<EditText> {
         _showPassword
             ? Icons.visibility_off_outlined
             : Icons.remove_red_eye_outlined,
+        color: primaryColor,
       ),
     );
   }
 
-  Widget? _getSuffix() {
+  Widget? _getSuffix(Color? primaryColor) {
     if (!widget.isPassword && widget.suffix == null) {
       return null;
     }
@@ -103,7 +104,7 @@ class _EditTextState extends State<EditText> {
       mainAxisSize: MainAxisSize.min,
       children: [
         widget.suffix ?? const SizedBox.shrink(),
-        _getPasswordButton(),
+        _getPasswordButton(primaryColor),
         const SizedBox(
           width: 5,
         )
@@ -219,7 +220,7 @@ class _EditTextState extends State<EditText> {
               ),
             ),
             prefixIcon: _getPrefix(),
-            suffixIcon: _getSuffix(),
+            suffixIcon: _getSuffix(themData.primaryColor),
           ),
         ),
       ),

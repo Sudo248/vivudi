@@ -5,6 +5,9 @@ import 'package:vivudi/config/network_config.dart';
 class NetworkService{
 
   final Dio _dio = Dio(NetworkConfig.baseOptions);
+  NetworkService(){
+    initDio();
+  }
 
   void initDio(){
     Log.success(message: "init dio");

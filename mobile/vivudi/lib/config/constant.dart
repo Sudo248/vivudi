@@ -1,10 +1,10 @@
 abstract class Constant{
   /// URL
-  static const baseUrl = "http://127.0.0.1:5000";
+  static const baseUrl = "http://10.0.2.2:5000";
   static const api = "/api/v1";
 
   static const userUrl = "$api/user";
-  static const loginUrl = "$userUrl/login";
+  static const loginUrl = "$api/auth/login";
   static const getMeUrl = "$userUrl/me";
   static const getHotels = "$userUrl/hotels";
 

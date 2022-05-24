@@ -23,12 +23,13 @@ class VivudiApp extends StatelessWidget {
         statusBarColor: Colors.transparent,
       ),
     );
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       navigatorKey: GetIt.I.get<NavigatorService>().navigatorKey,
       onGenerateRoute: (route) => AppPages.getPages(route),
       theme: appTheme,
-      home: const SplashPage(),
+      home: SplashPage(),
     );
   }
 }

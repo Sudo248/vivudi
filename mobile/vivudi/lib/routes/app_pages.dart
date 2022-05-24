@@ -10,7 +10,7 @@ abstract class AppPages{
       case AppRoute.login:
         return MaterialPageRoute(builder: (context) => LoginPage());
       default:
-        return MaterialPageRoute(builder: (context) => const SplashPage());
+        return MaterialPageRoute(builder: (context) => SplashPage());
     }
   }
 }
