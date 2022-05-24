@@ -1,7 +1,6 @@
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
-import 'package:vivudi/service/navigator_service.dart';
 
 class GlobalData {
 
