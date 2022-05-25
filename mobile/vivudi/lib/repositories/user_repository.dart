@@ -18,6 +18,7 @@ class UserRepository{
         final loginResponse = LoginResponse.fromMap(response.data);
         if(loginResponse.success){
           await (await fPref).setString(Constant.token, loginResponse.token!);
+          networkService.headers["Authorization"] = "Bearer ${loginResponse.token}";
         }
         return loginResponse;
     }catch(e){

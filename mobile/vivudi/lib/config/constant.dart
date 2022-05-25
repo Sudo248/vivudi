@@ -13,4 +13,6 @@ abstract class Constant{
   /// APP
   static const token = 'token';
 
+  static const upload = '$api/image/upload';
+
 }

@@ -18,7 +18,7 @@ class SplashBloc extends BlocBase{
     final response = await userRepo.getMe();
     if(response.success){
       // navigate to home
-      navigator.navigateOff(AppRoute.login);
+      navigator.navigateOff(AppRoute.onboarding);
     }else{
       // navigate to login
       navigator.navigateOff(AppRoute.login);
