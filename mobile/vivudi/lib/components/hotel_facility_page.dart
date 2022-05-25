@@ -135,7 +135,7 @@ class _HotelFacilityPageState extends State<HotelFacilityPage> {
                 setState(() {
                   bathrooms.fillRange(0, 4, false);
                   bathrooms[index] = !bathrooms[index];
-                  Constant.numberBathrooms = index + 1;
+                  Constant.numberBathrooms = index;
                 });
               },
               selectedColor: AppColors.whiteColor,
@@ -191,6 +191,7 @@ class _HotelFacilityPageState extends State<HotelFacilityPage> {
                   setState(() {
                     checkAmenities[index] = (value as bool);
                     Constant.amenities = checkAmenities;
+                    print("UPDATE: ${Constant.amenities}");
                   });
                 },
               ),

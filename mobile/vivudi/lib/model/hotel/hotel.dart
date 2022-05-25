@@ -1,3 +1,5 @@
+import 'package:vivudi/base/log.dart';
+
 class Hotel {
   String id;
   String image;
@@ -94,6 +96,8 @@ class Hotel {
   }
 
   factory Hotel.fromMap(Map<String, dynamic> map) {
+    Log.debug(message: "${map['amenities']}");
+
     return Hotel(
       id: (map['id'] ?? map['_id']) as String,
       image: map['image'] as String,

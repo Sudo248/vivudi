@@ -20,7 +20,7 @@ class DetailHotel extends StatelessWidget {
         elevation: 0,
       ),
       bottomNavigationBar: BottomAppBar(
-        child: Column(
+        child: Row(
           children: [
             Button(
               onPressed: () {},
@@ -45,7 +45,7 @@ class DetailHotel extends StatelessWidget {
       ),
       body: FutureBuilder(
         future: bloc.getRoomById(hotelId),
-        builder: (context, snapshot) {
+        builder: (_, snapshot) {
           if (!snapshot.hasData) {
             return const CircularProgressIndicator();
           } else {

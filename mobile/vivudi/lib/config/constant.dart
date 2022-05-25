@@ -25,6 +25,6 @@ abstract class Constant {
   static String description = '';
   static int numberBedrooms = 0;
   static int numberBathrooms = 0;
-  static List<bool> amenities = [];
-  static double price = 0.0;
+  static List<bool> amenities = List.generate(4, (index) => false);
+  static double price = 13000;
 }

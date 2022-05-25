@@ -54,7 +54,7 @@ class HotelResponse{
     return HotelResponse(
       success: map['success'] as bool,
       hotel: map['hotel'] != null ? Hotel.fromMap(map['hotel']): null,
-      error: map['error'] as String,
+      error: map['error'] as String?,
     );
   }
 
