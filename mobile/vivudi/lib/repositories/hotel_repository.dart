@@ -45,8 +45,8 @@ class HotelRepository {
 
   Future<HotelResponse> updateHotel(String id, HotelRequest request) async {
     try {
-      final response = await networkService.put(Constant.hotelUrl,
-          data: request.toMap(), queryParameters: {"hotelId": id});
+      final response = await networkService.put('${Constant.hotelUrl}/$id',
+          data: request.toMap());
       final hotelResponse = HotelResponse.fromMap(response.data);
       return hotelResponse;
     } catch (e) {
@@ -57,7 +57,8 @@ class HotelRepository {
   Future<HotelResponse> deleteHotel(String id) async {
     try {
       final response = await networkService
-          .delete(Constant.hotelUrl, queryParameters: {"hotelId": id});
+          .delete('${Constant.hotelUrl}/$id');
+
       final hotelResponse = HotelResponse.fromMap(response.data);
       return hotelResponse;
     } catch (e) {

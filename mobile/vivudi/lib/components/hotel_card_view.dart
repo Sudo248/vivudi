@@ -35,6 +35,7 @@ class HotelCardView extends StatelessWidget {
                   ),
                 ),
               ),
+              const SizedBox(height: 5.0,),
               Text(
                 hotel.roomType,
                 style: const TextStyle(
@@ -43,6 +44,7 @@ class HotelCardView extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
+              const SizedBox(height: 5.0,),
               Text(
                 hotel.address,
                 style: const TextStyle(
@@ -50,6 +52,7 @@ class HotelCardView extends StatelessWidget {
                   fontSize: 18,
                 ),
               ),
+              const SizedBox(height: 5.0,),
               Text(
                 "\$${hotel.price}/night",
                 style: const TextStyle(
