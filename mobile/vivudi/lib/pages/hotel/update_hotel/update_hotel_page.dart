@@ -116,6 +116,7 @@ class _UpdateHotelPageState extends State<UpdateHotelPage> {
                     _nextPage();
                   } else {
                     bloc.update();
+                    bloc.back();
                   }
                 },
                 style: ElevatedButton.styleFrom(

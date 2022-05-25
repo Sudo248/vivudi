@@ -13,18 +13,21 @@ class HomeBloc extends BlocBase {
   void onDispose() {}
 
   @override
-  void onInit() {}
+  void onInit() {
+    loadData();
+  }
 
-  Future<List<Hotel>?> loadData() async {
+  BehaviorSubject<List<Hotel>> hotels = BehaviorSubject();
+
+  Future<void> loadData() async {
     HotelsResponse resp = await GetIt.I<UserRepository>().getHotels();
     if (resp.success == true) {
-      return resp.hotels;
-    } else {
-      return null;
+      print(resp.hotels);
+      hotels.sink.add(resp.hotels!);
     }
   }
 
   void showDetailRoom(Hotel hotel) {
-    navigator.navigateTo(AppRoute.detailRoom);
+    navigator.navigateTo(AppRoute.detailRoom, arguments: hotel.id);
   }
 }

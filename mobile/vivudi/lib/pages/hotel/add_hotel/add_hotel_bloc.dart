@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:get_it/get_it.dart';
 import 'package:vivudi/model/hotel/hotel_request.dart';
 import 'package:vivudi/repositories/hotel_repository.dart';
@@ -19,6 +21,7 @@ class AddHotelBloc extends BlocBase {
   void back() => navigator.back();
 
   void createHotel() {
+    log(Constant.price.toString());
     GetIt.I<HotelRepository>().createHotel(
       HotelRequest(
         image: Constant.image,

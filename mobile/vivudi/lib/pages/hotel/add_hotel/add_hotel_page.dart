@@ -118,6 +118,7 @@ class _AddHotelPageState extends State<AddHotelPage> {
                     _nextPage();
                   } else {
                     bloc.createHotel();
+                    bloc.back();
                   }
                 },
                 style: ElevatedButton.styleFrom(
@@ -129,7 +130,7 @@ class _AddHotelPageState extends State<AddHotelPage> {
                       side: const BorderSide(color: AppColors.primaryColor)),
                 ),
                 child: Text(
-                  index < 2 ? 'Next' : 'Update',
+                  index < 2 ? 'Next' : 'Add',
                   style: const TextStyle(
                       color: AppColors.whiteColor, fontSize: 18),
                 ),

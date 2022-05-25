@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
+import 'package:vivudi/config/constant.dart';
 
 import '../resources/app_color.dart';
 
@@ -12,9 +14,14 @@ class HotelImagePage extends StatefulWidget {
 }
 
 class _HotelImagePageState extends State<HotelImagePage> {
-  
+  late String urlImage;
   @override
   void initState() {
+    if (widget.urlImage != null) {
+      urlImage = widget.urlImage!;
+    } else {
+      urlImage = Constant.image;
+    }
     super.initState();
   }
 

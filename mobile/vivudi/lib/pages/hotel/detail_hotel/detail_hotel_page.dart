@@ -14,6 +14,7 @@ class DetailHotel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     DetailHotelBloc bloc = DetailHotelBloc();
+    print("hotel Id: $hotelId");
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -63,7 +64,7 @@ class DetailHotel extends StatelessWidget {
                           (3.0 / 4.0),
                       child: FittedBox(
                           fit: BoxFit.fitWidth,
-                          child: Image.network(hotel.image)),
+                          child: Image.network(hotel.image),),
                     ),
                     Text(
                       hotel.roomType,

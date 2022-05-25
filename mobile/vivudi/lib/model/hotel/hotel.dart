@@ -1,4 +1,4 @@
-class Hotel{
+class Hotel {
   String id;
   String image;
   String roomType;
@@ -95,15 +95,15 @@ class Hotel{
 
   factory Hotel.fromMap(Map<String, dynamic> map) {
     return Hotel(
-      id: map['id'] as String,
+      id: (map['id'] ?? map['_id']) as String,
       image: map['image'] as String,
       roomType: map['roomType'] as String,
       address: map['address'] as String,
       description: map['description'] as String,
       numberBedrooms: map['numberBedrooms'] as int,
       numberBathrooms: map['numberBathrooms'] as int,
-      amenities: map['amenities'] as List<bool>,
-      price: map['price'] as double,
+      amenities: (map['amenities'] as List).map((e) => (e as bool)).toList(),
+      price: double.parse(map['price'].toString()),
     );
   }
 

@@ -53,7 +53,7 @@ class HotelResponse{
   factory HotelResponse.fromMap(Map<String, dynamic> map) {
     return HotelResponse(
       success: map['success'] as bool,
-      hotel: map['hotel'] as Hotel,
+      hotel: map['hotel'] != null ? Hotel.fromMap(map['hotel']): null,
       error: map['error'] as String,
     );
   }

@@ -82,7 +82,7 @@ class _HotelFacilityPageState extends State<HotelFacilityPage> {
                 setState(() {
                   bedrooms.fillRange(0, 4, false);
                   bedrooms[index] = !bedrooms[index];
-                  Constant.numberBedrooms = index + 1;
+                  Constant.numberBedrooms = index;
                 });
               },
               selectedColor: AppColors.whiteColor,

@@ -13,41 +13,52 @@ class HotelCardView extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onPress,
-      child: Card(
-        elevation: 1.0,
-        child: Column(
-          children: [
-            SizedBox(
-              width: MediaQuery.of(context).size.width * 0.8,
-              height: MediaQuery.of(context).size.width * 0.8 * (3.0 / 4.0),
-              child: FittedBox(
-                fit: BoxFit.fitWidth,
-                child: Image.network(hotel.image),
+      child: Padding(
+        padding: const EdgeInsets.only(top: 15.0),
+        child: Card(
+          elevation: 0,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Center(
+                child: Card(
+                  clipBehavior: Clip.antiAlias,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  elevation: 0,
+                  child: Ink.image(
+                    image: NetworkImage(hotel.image),
+                    width: double.infinity,
+                    height: 240,
+                    fit: BoxFit.cover,
+                  ),
+                ),
               ),
-            ),
-            Text(
-              hotel.roomType,
-              style: const TextStyle(
-                color: AppColors.textColor,
-                fontSize: 11,
-                fontWeight: FontWeight.bold,
+              Text(
+                hotel.roomType,
+                style: const TextStyle(
+                  color: AppColors.textColor,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-            Text(
-              hotel.address,
-              style: const TextStyle(
-                color: AppColors.subTextColor,
-                fontSize: 10,
+              Text(
+                hotel.address,
+                style: const TextStyle(
+                  color: AppColors.subTextColor,
+                  fontSize: 18,
+                ),
               ),
-            ),
-            Text(
-              "\$${hotel.price}/night",
-              style: const TextStyle(
-                color: AppColors.textColor,
-                fontSize: 11,
+              Text(
+                "\$${hotel.price}/night",
+                style: const TextStyle(
+                  color: AppColors.textColor,
+                  fontSize: 18,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

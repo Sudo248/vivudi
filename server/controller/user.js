@@ -59,6 +59,7 @@ module.exports.login = asyncHandler(async function (req, res, next) {
 
     // Create token
     const token = await user.getSignedJWTToken();
+    console.log(token)
     res.status(200).json({
         success: true,
         token,

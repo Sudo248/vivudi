@@ -1,6 +1,6 @@
 import 'hotel.dart';
 
-class HotelsResponse{
+class HotelsResponse {
   bool success;
   List<Hotel>? hotels;
   String? error;
@@ -51,11 +51,19 @@ class HotelsResponse{
   }
 
   factory HotelsResponse.fromMap(Map<String, dynamic> map) {
-    return HotelsResponse(
-      success: map['success'] as bool,
-      hotels: map['hotels'] as List<Hotel>?,
-      error: map['error'] as String?,
-    );
+    try {
+      dynamic hotels = map['hotels'];
+      if (hotels != null) {
+        hotels = (hotels as List).map((e) => Hotel.fromMap(e)).toList();
+      }
+      return HotelsResponse(
+        success: map['success'] as bool,
+        hotels: hotels,
+        error: map['error'] as String?,
+      );
+    } catch (e) {
+      return HotelsResponse(success: false, error: e.toString());
+    }
   }
 
 //</editor-fold>
