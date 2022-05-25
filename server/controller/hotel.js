@@ -1,6 +1,7 @@
 const ErrorResponse = require('../util/errorResponse');
 const asyncHandler = require('../util/async');
 const Hotel = require('../model/hotel');
+const User = require('../model/user');
 
 const selectHotel = {
     image: 1,
@@ -29,6 +30,8 @@ module.exports.getDetailHotel = asyncHandler(async function(req, res, next){
 
     const hotel = await Hotel.findById(hotelId).lean().select(selectHotel);
 
+    console.log(hotel);
+
     res
     .status(200)
     .json({
@@ -39,7 +42,7 @@ module.exports.getDetailHotel = asyncHandler(async function(req, res, next){
 });
 
 module.exports.createHotel = asyncHandler(async function(req, res, next){
-
+    const userId = req.body.userId;
     const hotelInfo = {
         image,
         roomType,
@@ -54,6 +57,9 @@ module.exports.createHotel = asyncHandler(async function(req, res, next){
     // console.log(hotelInfo);
 
     const hotel = await Hotel.create(hotelInfo);
+    const user = await User.findById(userId).select({hotels: 1});
+    user.hotels.push(hotel.id);
+    await user.save();
 
     if(!hotel){
         return next(ErrorResponse('Error create hotel', 401));

@@ -83,7 +83,7 @@ module.exports.getMe = asyncHandler(async function (req, res, next) {
 
 module.exports.getHotels = asyncHandler(async function (req, res, next) {
     const userId = req.body.userId;
-
+    // console.log(userId);
     const user = await User.findById(userId)
         .lean()
         .select({ hotels: 1 })

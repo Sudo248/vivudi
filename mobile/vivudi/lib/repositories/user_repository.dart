@@ -48,5 +48,9 @@ class UserRepository{
     }
   }
 
+  Future<void> logout() async{
+    await (await fPref).setString(Constant.token, "");
+  }
+
 
 }
