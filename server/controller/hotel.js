@@ -51,9 +51,10 @@ module.exports.createHotel = asyncHandler(async function(req, res, next){
         price
     } = req.body;
 
-    // console.log(hotelInfo);
+    console.log(hotelInfo);
 
     const hotel = await Hotel.create(hotelInfo);
+    
 
     if(!hotel){
         return next(ErrorResponse('Error create hotel', 401));
@@ -63,7 +64,6 @@ module.exports.createHotel = asyncHandler(async function(req, res, next){
     .status(201)
     .json({
         success: true,
-        hotel
     });
 
 });
