@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:vivudi/pages/onboarding/onboarding_bloc.dart';
 import 'package:vivudi/resources/app_color.dart';
 
 import '../home/home_page.dart';
@@ -16,11 +17,12 @@ class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
   int _index = 0;
   final List<Widget> _pages = [const HomePage(), const ProfilePage()];
   late final AnimationController popUpController;
+  OnboardingBloc bloc = OnboardingBloc();
 
   @override
   void initState() {
     popUpController = AnimationController(vsync: this);
-    super.initState();  
+    super.initState();
   }
 
   void _changeIndex(int index) {
@@ -34,7 +36,7 @@ class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
     return Scaffold(
       body: _pages.elementAt(_index),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () => bloc.addHotel(),
         backgroundColor: AppColors.primaryColor,
         child: const FaIcon(FontAwesomeIcons.plus),
       ),

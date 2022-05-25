@@ -5,24 +5,21 @@ import 'package:vivudi/service/network_service.dart';
 
 import '../../routes/app_route.dart';
 
-class SplashBloc extends BlocBase{
+class SplashBloc extends BlocBase {
   final UserRepository userRepo = GetIt.I.get<UserRepository>();
   @override
-  void onDispose() {
-
-  }
+  void onDispose() {}
 
   @override
-  void onInit() async{
+  void onInit() async {
     await Future.delayed(const Duration(seconds: 1));
     final response = await userRepo.getMe();
-    if(response.success){
+    if (response.success) {
       // navigate to home
-      navigator.navigateOff(AppRoute.login);
-    }else{
+      navigator.navigateOff(AppRoute.onboarding);
+    } else {
       // navigate to login
       navigator.navigateOff(AppRoute.login);
     }
   }
-
 }

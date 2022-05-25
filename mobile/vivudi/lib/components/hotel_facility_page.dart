@@ -1,126 +1,235 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:vivudi/config/constant.dart';
 import 'package:vivudi/resources/app_color.dart';
 
 class HotelFacilityPage extends StatefulWidget {
-  const HotelFacilityPage({Key? key}) : super(key: key);
+  final List<bool>? checkAmenities;
+  final int? noBedrooms;
+  final int? noBathrooms;
+  final double? price;
+
+  const HotelFacilityPage({
+    Key? key,
+    this.checkAmenities,
+    this.noBathrooms,
+    this.noBedrooms,
+    this.price,
+  }) : super(key: key);
 
   @override
   State<HotelFacilityPage> createState() => _HotelFacilityPageState();
 }
 
 class _HotelFacilityPageState extends State<HotelFacilityPage> {
-  final List<bool> _checkAmenities = List.generate(4, (index) => false);
-  final List<String> _amenities = ['Parking', 'Restaurant', 'Wifi', 'Others'];
-  final List<bool> _bedrooms = List.generate(4, (index) => false);
-  final List<bool> _bathrooms = List.generate(4, (index) => false);
-  double _price = 15000;
+  final List<String> amenities = ['Parking', 'Restaurant', 'Wifi', 'Others'];
+  late List<bool> checkAmenities;
+  late final List<bool> bedrooms;
+  late final List<bool> bathrooms;
+  late double price;
+
+  @override
+  void initState() {
+    if (widget.checkAmenities != null) {
+      checkAmenities = widget.checkAmenities!;
+    } else {
+      checkAmenities = List.generate(4, (index) => index == 0 ? true : false);
+    }
+
+    if (widget.noBedrooms != null) {
+      bedrooms = List.generate(
+          4, (index) => index == widget.noBathrooms ? true : false);
+    } else {
+      bedrooms = List.generate(4, (index) => index == 0 ? true : false);
+    }
+
+    if (widget.noBathrooms != null) {
+      bathrooms = List.generate(
+          4, (index) => index == widget.noBathrooms ? true : false);
+    } else {
+      bathrooms = List.generate(4, (index) => index == 0 ? true : false);
+    }
+
+    if (widget.price != null) {
+      price = widget.price!;
+    } else {
+      price = 13000;
+    }
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            'Bedrooms',
-            style: TextStyle(
-              color: AppColors.blackColor,
-              fontSize: 18,
+      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'Bedrooms',
+              style: TextStyle(
+                color: AppColors.blackColor,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
-          const SizedBox(height: 10.0,),
-          ToggleButtons(
-              isSelected: _bedrooms,
-            onPressed: (index){
+            const SizedBox(
+              height: 10.0,
+            ),
+            ToggleButtons(
+              isSelected: bedrooms,
+              onPressed: (index) {
                 setState(() {
-                  _bedrooms.fillRange(0, 4, false);
-                  _bedrooms[index] = !_bedrooms[index];
-                });
-            },
-            selectedColor: AppColors.whiteColor,
-            fillColor: AppColors.primaryColor,
-            selectedBorderColor: AppColors.primaryColor,
-              children: const [
-                Text('Any'),
-                Text('1'),
-                Text('2'),
-                Text('3+'),
-              ],
-          ),
-          const SizedBox(height: 10.0,),
-          const Text(
-            'Bathrooms',
-            style: TextStyle(
-              color: AppColors.blackColor,
-              fontSize: 18,
-            ),
-          ),
-          const SizedBox(height: 10.0,),
-          ToggleButtons(
-              isSelected: _bathrooms,
-            onPressed: (index){
-              setState(() {
-                _bathrooms.fillRange(0, 4, false);
-                _bathrooms[index] = !_bathrooms[index];
-              });
-            },
-            selectedColor: AppColors.whiteColor,
-            fillColor: AppColors.primaryColor,
-            selectedBorderColor: AppColors.primaryColor,
-              children: const [
-                Text('Any'),
-                Text('1'),
-                Text('2'),
-                Text('3+'),
-              ],
-          ),
-          const SizedBox(height: 10.0,),
-          const Text(
-            'Amenities',
-            style: TextStyle(
-              color: AppColors.blackColor,
-              fontSize: 18,
-            ),
-          ),
-          for (var index = 0; index < 4; index++)
-            CheckboxListTile(
-              activeColor: AppColors.primaryColor,
-              checkColor: AppColors.whiteColor,
-              selectedTileColor: AppColors.blackColor,
-              controlAffinity: ListTileControlAffinity.trailing,
-              title: Text(_amenities.elementAt(index)),
-              value: _checkAmenities.elementAt(index),
-              onChanged: (value) {
-                setState(() {
-                  _checkAmenities[index] = (value as bool);
+                  bedrooms.fillRange(0, 4, false);
+                  bedrooms[index] = !bedrooms[index];
+                  Constant.numberBedrooms = index + 1;
                 });
               },
+              selectedColor: AppColors.whiteColor,
+              fillColor: AppColors.primaryColor,
+              selectedBorderColor: AppColors.primaryColor,
+              children: const [
+                Text(
+                  'Any',
+                  style: TextStyle(
+                    fontSize: 18,
+                  ),
+                ),
+                Text(
+                  '1',
+                  style: TextStyle(
+                    fontSize: 18,
+                  ),
+                ),
+                Text(
+                  '2',
+                  style: TextStyle(
+                    fontSize: 18,
+                  ),
+                ),
+                Text(
+                  '3+',
+                  style: TextStyle(
+                    fontSize: 18,
+                  ),
+                ),
+              ],
             ),
-          const SizedBox(height: 10.0,),
-          const Text(
-            'Price',
-            style: TextStyle(
-              color: AppColors.blackColor,
-              fontSize: 18,
+            const SizedBox(
+              height: 10.0,
             ),
-          ),
-          const SizedBox(height: 10.0,),
-          Slider(
+            const Text(
+              'Bathrooms',
+              style: TextStyle(
+                color: AppColors.blackColor,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(
+              height: 10.0,
+            ),
+            ToggleButtons(
+              isSelected: bathrooms,
+              onPressed: (index) {
+                setState(() {
+                  bathrooms.fillRange(0, 4, false);
+                  bathrooms[index] = !bathrooms[index];
+                  Constant.numberBathrooms = index + 1;
+                });
+              },
+              selectedColor: AppColors.whiteColor,
+              fillColor: AppColors.primaryColor,
+              selectedBorderColor: AppColors.primaryColor,
+              children: const [
+                Text(
+                  'Any',
+                  style: TextStyle(
+                    fontSize: 18,
+                  ),
+                ),
+                Text(
+                  '1',
+                  style: TextStyle(
+                    fontSize: 18,
+                  ),
+                ),
+                Text(
+                  '2',
+                  style: TextStyle(
+                    fontSize: 18,
+                  ),
+                ),
+                Text(
+                  '3+',
+                  style: TextStyle(
+                    fontSize: 18,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 10.0,
+            ),
+            const Text(
+              'Amenities',
+              style: TextStyle(
+                color: AppColors.blackColor,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            for (var index = 0; index < 4; index++)
+              CheckboxListTile(
+                activeColor: AppColors.primaryColor,
+                checkColor: AppColors.whiteColor,
+                selectedTileColor: AppColors.blackColor,
+                controlAffinity: ListTileControlAffinity.trailing,
+                title: Text(amenities.elementAt(index)),
+                value: checkAmenities.elementAt(index),
+                onChanged: (value) {
+                  setState(() {
+                    checkAmenities[index] = (value as bool);
+                    Constant.amenities = checkAmenities;
+                  });
+                },
+              ),
+            const SizedBox(
+              height: 10.0,
+            ),
+            const Text(
+              'Price',
+              style: TextStyle(
+                color: AppColors.blackColor,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(
+              height: 10.0,
+            ),
+            Slider(
               min: 0,
               max: 30000,
-              value: _price,
+              value: price,
               divisions: 60,
               activeColor: AppColors.primaryColor,
-              label: (_price.toInt()).toString(),
+              label: (price.toInt()).toString(),
               onChanged: (value) {
                 setState(() {
-                  _price = value;
+                  price = value;
+                  Constant.price = value;
                 });
               },
-          ),
-        ],
+            ),
+            Center(
+              child: Text(
+                '\$${price.toInt()}',
+                style: const TextStyle(color: AppColors.subTextColor),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
