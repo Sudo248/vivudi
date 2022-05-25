@@ -15,6 +15,8 @@ abstract class Constant {
   /// APP
   static const token = 'token';
 
+  static const upload = '$api/image/upload';
+
   // Info of current Hotel
   static String id = '';
   static String image = '';

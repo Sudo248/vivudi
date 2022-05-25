@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vivudi/model/hotel/hotel_request.dart';
 
@@ -52,6 +54,19 @@ class HotelRepository{
       return hotelResponse;
     }catch(e){
       return HotelResponse(success: false, error: e.toString());
+    }
+  }
+
+  Future<String?> uploadImage(File image) async{
+    try{
+      final response = await networkService.uploadImage(Constant.upload, image: image);
+      if(response.data['success'] as bool){
+        return response.data['url'] as String;
+      }else{
+        return null;
+      }
+    }catch(e){
+      return null;
     }
   }
 

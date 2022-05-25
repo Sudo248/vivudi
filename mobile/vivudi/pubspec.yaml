@@ -24,6 +24,8 @@ dependencies:
   readmore: ^2.1.0
   image_picker: ^0.8.5+3
   image_cropper: ^2.0.3
+  path_provider: ^2.0.10
+  path: ^1.8.1
 
 dev_dependencies:
   flutter_test:
