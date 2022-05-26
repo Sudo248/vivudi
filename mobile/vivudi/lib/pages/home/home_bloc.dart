@@ -27,7 +27,8 @@ class HomeBloc extends BlocBase {
     }
   }
 
-  void showDetailRoom(Hotel hotel) {
-    navigator.navigateTo(AppRoute.detailRoom, arguments: hotel.id);
+  void showDetailRoom(Hotel hotel) async {
+    await navigator.navigateTo(AppRoute.detailRoom, arguments: hotel.id);
+    loadData();
   }
 }

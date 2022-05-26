@@ -6,6 +6,7 @@ import 'package:vivudi/pages/hotel/detail_hotel/detail_hotel_bloc.dart';
 
 import '../../../model/hotel/hotel.dart';
 import '../../../resources/app_color.dart';
+import '../../../utils/dialog.dart';
 
 class DetailHotel extends StatelessWidget {
   final String hotelId;
@@ -14,32 +15,63 @@ class DetailHotel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     DetailHotelBloc bloc = DetailHotelBloc();
-    print("hotel Id: $hotelId");
+    // print("hotel Id: $hotelId");
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
+        backgroundColor: AppColors.whiteColor,
+        leading: IconButton(
+          icon: const FaIcon(FontAwesomeIcons.angleLeft, color: AppColors.blackColor,),
+          onPressed: () => bloc.back(),
+        )
       ),
       bottomNavigationBar: BottomAppBar(
+        elevation: 0,
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Button(
-              onPressed: () {},
-              borderRadius: BorderRadius.circular(10.0),
-              primary: AppColors.primaryColor,
+            ElevatedButton(
+              onPressed: () {
+                showConfirmDialog(
+                    context,
+                    title: const Text('Are you sure delete \nthis post',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.center,),
+                    onPositive: () => bloc.delete(hotelId),
+                    positive: const Text('Delete', style: TextStyle(color: AppColors.primaryColor, fontWeight: FontWeight.bold),),
+                    negative: const Text('Cancel', style: TextStyle(fontWeight: FontWeight.bold),),
+                );
+
+                },
+              style: ElevatedButton.styleFrom(
+                elevation: 0,
+                minimumSize: const Size(120.0, 40.0),
+                primary: AppColors.whiteColor,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0),
+                    side: const BorderSide(color: AppColors.primaryColor),),
+              ),
               child: const Text(
                 'Delete',
-                style: TextStyle(color: AppColors.whiteColor),
-              ),
-            ),
-            Button(
-              onPressed: () {},
-              borderRadius: BorderRadius.circular(10.0),
-              primary: AppColors.whiteColor,
-              child: const Text(
-                'Edit',
                 style: TextStyle(color: AppColors.primaryColor),
               ),
             ),
+            ElevatedButton(
+              onPressed: ()=> bloc.edit(),
+              style: ElevatedButton.styleFrom(
+                elevation: 0,
+                minimumSize: const Size(120.0, 40.0),
+                primary: AppColors.primaryColor,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0),
+                    side: const BorderSide(color: AppColors.primaryColor),),
+              ),
+              child: const Text(
+                'Edit',
+                style: TextStyle(color: AppColors.whiteColor),
+              ),
+            ),
+
           ],
         ),
       ),
@@ -56,78 +88,103 @@ class DetailHotel extends StatelessWidget {
                 return const CircularProgressIndicator();
               case ConnectionState.done:
                 Hotel hotel = (snapshot.data! as Hotel);
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.8,
-                      height: (MediaQuery.of(context).size.width * 0.8) *
-                          (3.0 / 4.0),
-                      child: FittedBox(
-                          fit: BoxFit.fitWidth,
-                          child: Image.network(hotel.image),),
-                    ),
-                    Text(
-                      hotel.roomType,
-                      style: const TextStyle(
-                        color: AppColors.textColor,
-                        fontSize: 11,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        const FaIcon(FontAwesomeIcons.locationDot),
-                        const SizedBox(
-                          width: 3.0,
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Card(
+                        clipBehavior: Clip.antiAlias,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
                         ),
-                        Text(
-                          hotel.address,
-                          style: const TextStyle(
-                            color: AppColors.subTextColor,
-                            fontSize: 10,
-                          ),
-                        )
-                      ],
-                    ),
-                    const Divider(
-                      color: AppColors.greyColor,
-                    ),
-                    Text(
-                        '${hotel.numberBedrooms} ${hotel.numberBedrooms > 1 ? 'beds' : 'bed'} • ${hotel.numberBathrooms} ${hotel.numberBathrooms > 1 ? 'baths' : 'bath'}'),
-                    const Divider(
-                      color: AppColors.greyColor,
-                    ),
-                    ReadMoreText(
-                      hotel.description,
-                      trimLines: 3,
-                      colorClickableText: AppColors.textColor,
-                      trimMode: TrimMode.Line,
-                      trimCollapsedText: '...Read more',
-                      trimExpandedText: 'Show less',
-                    ),
-                    const Divider(
-                      color: AppColors.greyColor,
-                    ),
-                    const Text(
-                      'Facilities',
-                      style: TextStyle(
-                        color: AppColors.textColor,
-                        fontSize: 11,
-                        fontWeight: FontWeight.bold,
+                        elevation: 0,
+                        child: Ink.image(
+                          image: NetworkImage(hotel.image),
+                          width: double.infinity,
+                          height: 240,
+                          fit: BoxFit.cover,
+                        ),
                       ),
-                    ),
-                    Row(
-                      children: [
-                        for (var index = 0; index < 4; index++)
-                          Visibility(
-                            visible: hotel.amenities.elementAt(index),
-                            maintainSize: false,
-                            child: facility(index),
+                      const SizedBox(height: 5.0,),
+                      Text(
+                        hotel.roomType,
+                        style: const TextStyle(
+                          color: AppColors.textColor,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 10.0,),
+                      Row(
+                        children: [
+                          const FaIcon(FontAwesomeIcons.locationDot, color: AppColors.subTextColor,),
+                          const SizedBox(width: 5.0,),
+                          const SizedBox(
+                            width: 3.0,
                           ),
-                      ],
-                    ),
-                  ],
+                          Text(
+                            hotel.address,
+                            style: const TextStyle(
+                              color: AppColors.subTextColor,
+                              fontSize: 18,
+                            ),
+                          )
+                        ],
+                      ),
+                      const Divider(
+                        color: AppColors.greyColor,
+                        thickness: 1,
+                        height: 30.0,
+                      ),
+                      Text(
+                          '${hotel.numberBedrooms} ${hotel.numberBedrooms > 1 ? 'beds' : 'bed'} • ${hotel.numberBathrooms} ${hotel.numberBathrooms > 1 ? 'baths' : 'bath'}',
+                          style: const TextStyle(color: AppColors.textColor),
+                      ),
+                      const Divider(
+                        color: AppColors.greyColor,
+                        thickness: 1,
+                        height: 30.0,
+                      ),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height*0.2,
+                        child: ReadMoreText(
+                          hotel.description,
+                          style: const TextStyle(color: AppColors.textColor),
+                          moreStyle: const TextStyle(color: AppColors.primaryColor),
+                          colorClickableText: Colors.black,
+                          trimMode: TrimMode.Line,
+                          trimCollapsedText: 'Read more',
+                          trimExpandedText: 'Show less',
+                        ),
+                      ),
+                      const Divider(
+                        color: AppColors.greyColor,
+                        thickness: 1,
+                        height: 30.0,
+                      ),
+                      const Text(
+                        'Facilities',
+                        style: TextStyle(
+                          color: AppColors.textColor,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 20.0,),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          for (var index = 0; index < 4; index++)
+                            Visibility(
+                              visible: hotel.amenities.elementAt(index),
+                              maintainSize: false,
+                              child: facility(index),
+                            ),
+                        ],
+                      ),
+                    ],
+                  ),
                 );
             }
           }
@@ -142,28 +199,28 @@ class DetailHotel extends StatelessWidget {
         return Column(
           children: const [
             FaIcon(FontAwesomeIcons.car),
-            Text('Parking'),
+            Text('Parking', style: TextStyle(fontSize: 16.0),),
           ],
         );
       case 1:
         return Column(
           children: const [
             FaIcon(FontAwesomeIcons.utensils),
-            Text('Restaurant'),
+            Text('Restaurant', style: TextStyle(fontSize: 16.0),),
           ],
         );
       case 2:
         return Column(
           children: const [
             FaIcon(FontAwesomeIcons.wifi),
-            Text('Parking'),
+            Text('Parking', style: TextStyle(fontSize: 16.0),),
           ],
         );
       default:
         return Column(
           children: const [
             FaIcon(FontAwesomeIcons.ellipsis),
-            Text('More'),
+            Text('More', style: TextStyle(fontSize: 13.0),),
           ],
         );
     }

@@ -9,7 +9,8 @@ import '../../../components/hotel_image_page.dart';
 import '../../../components/hotel_info_page.dart';
 
 class UpdateHotelPage extends StatefulWidget {
-  const UpdateHotelPage({Key? key}) : super(key: key);
+  final String hotelId;
+  const UpdateHotelPage({Key? key, required this.hotelId}) : super(key: key);
 
   @override
   State<UpdateHotelPage> createState() => _UpdateHotelPageState();
