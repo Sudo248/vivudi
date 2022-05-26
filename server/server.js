@@ -25,15 +25,16 @@ const api_url = "/api/v1";
 
 app.use(`${api_url}/auth`, auth);
 
+app.use('/',express.static("public"));
+
+app.use(`${api_url}/image`, image);
+
 app.use(protect)
 
 app.use(`${api_url}/user`, user);
 
 app.use(`${api_url}/hotel`, hotel);
 
-app.use('/',express.static("public"));
-
-app.use(`${api_url}/image`, image);
 
 app.get(`/`,(req, res)=>{
     res.send(`

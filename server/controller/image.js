@@ -16,7 +16,7 @@ module.exports.upload = asyncHandler(async function(req, res, next){
 
     const filename = await fileUpload.save(req.file.buffer);
 
-    const urlImage = process.env.SERVER_URL+`/image/${filename}`;
+    const urlImage = filename;
 
     res
     .status(200)
