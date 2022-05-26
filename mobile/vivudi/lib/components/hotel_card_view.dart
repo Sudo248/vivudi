@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vivudi/config/constant.dart';
 
 import '../model/hotel/hotel.dart';
 import '../resources/app_color.dart';
@@ -28,7 +29,7 @@ class HotelCardView extends StatelessWidget {
                   ),
                   elevation: 0,
                   child: Ink.image(
-                    image: NetworkImage(hotel.image),
+                    image: NetworkImage(Constant.baseUrl + Constant.getImge + hotel.image),
                     width: double.infinity,
                     height: 240,
                     fit: BoxFit.cover,

@@ -1,20 +1,13 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:vivudi/config/constant.dart';
 import 'package:vivudi/resources/app_color.dart';
+import 'package:vivudi/utils/dialog.dart';
 
 class HotelFacilityPage extends StatefulWidget {
-  final List<bool>? checkAmenities;
-  final int? noBedrooms;
-  final int? noBathrooms;
-  final double? price;
-
-  const HotelFacilityPage({
-    Key? key,
-    this.checkAmenities,
-    this.noBathrooms,
-    this.noBedrooms,
-    this.price,
-  }) : super(key: key);
+  const HotelFacilityPage({Key? key}) : super(key: key);
 
   @override
   State<HotelFacilityPage> createState() => _HotelFacilityPageState();
@@ -26,34 +19,32 @@ class _HotelFacilityPageState extends State<HotelFacilityPage> {
   late final List<bool> bedrooms;
   late final List<bool> bathrooms;
   late double price;
+  TextEditingController c1 = TextEditingController();
+  TextEditingController c2 = TextEditingController();
+  late String bathroomsNum;
+  late String bedroomsNum;
 
   @override
   void initState() {
-    if (widget.checkAmenities != null) {
-      checkAmenities = widget.checkAmenities!;
+    bathroomsNum = Constant.numberBathrooms < 3
+        ? '3'
+        : Constant.numberBathrooms.toString();
+    bedroomsNum =
+        Constant.numberBedrooms < 3 ? '3' : Constant.numberBedrooms.toString();
+    checkAmenities = Constant.amenities;
+    bedrooms = List.generate(4, (index) => false);
+    if (Constant.numberBedrooms < 3) {
+      bedrooms[Constant.numberBedrooms] = true;
     } else {
-      checkAmenities = List.generate(4, (index) => index == 0 ? true : false);
+      bedrooms[3] = true;
     }
-
-    if (widget.noBedrooms != null) {
-      bedrooms = List.generate(
-          4, (index) => index == widget.noBathrooms ? true : false);
+    bathrooms = List.generate(4, (index) => false);
+    if (Constant.numberBathrooms < 3) {
+      bathrooms[Constant.numberBathrooms] = true;
     } else {
-      bedrooms = List.generate(4, (index) => index == 0 ? true : false);
+      bathrooms[3] = true;
     }
-
-    if (widget.noBathrooms != null) {
-      bathrooms = List.generate(
-          4, (index) => index == widget.noBathrooms ? true : false);
-    } else {
-      bathrooms = List.generate(4, (index) => index == 0 ? true : false);
-    }
-
-    if (widget.price != null) {
-      price = widget.price!;
-    } else {
-      price = 13000;
-    }
+    price = Constant.price;
     super.initState();
   }
 
@@ -69,50 +60,86 @@ class _HotelFacilityPageState extends State<HotelFacilityPage> {
               'Bedrooms',
               style: TextStyle(
                 color: AppColors.blackColor,
-                fontSize: 18,
+                fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
             ),
             const SizedBox(
               height: 10.0,
             ),
-            ToggleButtons(
-              isSelected: bedrooms,
-              onPressed: (index) {
-                setState(() {
-                  bedrooms.fillRange(0, 4, false);
-                  bedrooms[index] = !bedrooms[index];
-                  Constant.numberBedrooms = index;
-                });
-              },
-              selectedColor: AppColors.whiteColor,
-              fillColor: AppColors.primaryColor,
-              selectedBorderColor: AppColors.primaryColor,
-              children: const [
-                Text(
-                  'Any',
-                  style: TextStyle(
-                    fontSize: 18,
-                  ),
+            Row(
+              children: [
+                ToggleButtons(
+                  isSelected: bedrooms,
+                  onPressed: (index) {
+                    setState(() {
+                      bedrooms.fillRange(0, 4, false);
+                      bedrooms[index] = !bedrooms[index];
+                      Constant.numberBedrooms = index;
+                    });
+                  },
+                  selectedColor: AppColors.whiteColor,
+                  fillColor: AppColors.primaryColor,
+                  selectedBorderColor: AppColors.primaryColor,
+                  children: [
+                    const Text(
+                      'Any',
+                      style: TextStyle(
+                        fontSize: 18,
+                      ),
+                    ),
+                    const Text(
+                      '1',
+                      style: TextStyle(
+                        fontSize: 18,
+                      ),
+                    ),
+                    const Text(
+                      '2',
+                      style: TextStyle(
+                        fontSize: 18,
+                      ),
+                    ),
+                    Text(
+                      bedroomsNum,
+                      style: const TextStyle(
+                        fontSize: 18,
+                      ),
+                    ),
+                  ],
                 ),
-                Text(
-                  '1',
-                  style: TextStyle(
-                    fontSize: 18,
-                  ),
-                ),
-                Text(
-                  '2',
-                  style: TextStyle(
-                    fontSize: 18,
-                  ),
-                ),
-                Text(
-                  '3+',
-                  style: TextStyle(
-                    fontSize: 18,
-                  ),
-                ),
+                IconButton(
+                  icon: const FaIcon(FontAwesomeIcons.plus),
+                  onPressed: () {
+                    showConfirmDialog(
+                      context,
+                      negative: const Text('Cancel',
+                          style: TextStyle(
+                              fontSize: 14, color: AppColors.primaryColor)),
+                      positive:
+                          const Text('Submit', style: TextStyle(fontSize: 14)),
+                      title: const Text(
+                        'Number of \nbedrooms',
+                        style: TextStyle(fontSize: 14),
+                      ),
+                      content: TextField(
+                        controller: c1,
+                        maxLength: 3,
+                        keyboardType: TextInputType.number,
+                      ),
+                      onPositive: () {
+                        setState(
+                          () {
+                            bedrooms.fillRange(0, 4, false);
+                            bedrooms[3] = !bedrooms[3];
+                            bedroomsNum = c1.text;
+                            Constant.numberBedrooms = int.parse(bedroomsNum);
+                          },
+                        );
+                      },
+                    );
+                  },
+                )
               ],
             ),
             const SizedBox(
@@ -122,50 +149,72 @@ class _HotelFacilityPageState extends State<HotelFacilityPage> {
               'Bathrooms',
               style: TextStyle(
                 color: AppColors.blackColor,
-                fontSize: 18,
+                fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
             ),
             const SizedBox(
               height: 10.0,
             ),
-            ToggleButtons(
-              isSelected: bathrooms,
-              onPressed: (index) {
-                setState(() {
-                  bathrooms.fillRange(0, 4, false);
-                  bathrooms[index] = !bathrooms[index];
-                  Constant.numberBathrooms = index;
-                });
-              },
-              selectedColor: AppColors.whiteColor,
-              fillColor: AppColors.primaryColor,
-              selectedBorderColor: AppColors.primaryColor,
-              children: const [
-                Text(
-                  'Any',
-                  style: TextStyle(
-                    fontSize: 18,
-                  ),
+            Row(
+              children: [
+                ToggleButtons(
+                  isSelected: bathrooms,
+                  onPressed: (index) {
+                    setState(() {
+                      bathrooms.fillRange(0, 4, false);
+                      bathrooms[index] = !bathrooms[index];
+                      Constant.numberBathrooms = index;
+                    });
+                  },
+                  selectedColor: AppColors.whiteColor,
+                  fillColor: AppColors.primaryColor,
+                  selectedBorderColor: AppColors.primaryColor,
+                  children: [
+                    const Text(
+                      'Any',
+                      style: TextStyle(
+                        fontSize: 18,
+                      ),
+                    ),
+                    const Text(
+                      '1',
+                      style: TextStyle(
+                        fontSize: 18,
+                      ),
+                    ),
+                    const Text(
+                      '2',
+                      style: TextStyle(
+                        fontSize: 18,
+                      ),
+                    ),
+                    Text(
+                      bathroomsNum,
+                      style: const TextStyle(
+                        fontSize: 18,
+                      ),
+                    ),
+                  ],
                 ),
-                Text(
-                  '1',
-                  style: TextStyle(
-                    fontSize: 18,
-                  ),
-                ),
-                Text(
-                  '2',
-                  style: TextStyle(
-                    fontSize: 18,
-                  ),
-                ),
-                Text(
-                  '3+',
-                  style: TextStyle(
-                    fontSize: 18,
-                  ),
-                ),
+                IconButton(
+                  icon: const FaIcon(FontAwesomeIcons.plus),
+                  onPressed: () {
+                    showConfirmDialog(context,
+                        negative: const Text('Submit'),
+                        title: const Text('Number of \nbathrooms'),
+                        content: TextField(
+                            controller: c2, keyboardType: TextInputType.number),
+                        onNegative: () {
+                      setState(() {
+                        bathrooms.fillRange(0, 4, false);
+                        bathrooms[3] = !bathrooms[3];
+                        bathroomsNum = c2.text;
+                        Constant.numberBathrooms = int.parse(bathroomsNum);
+                      });
+                    });
+                  },
+                )
               ],
             ),
             const SizedBox(
@@ -175,7 +224,7 @@ class _HotelFacilityPageState extends State<HotelFacilityPage> {
               'Amenities',
               style: TextStyle(
                 color: AppColors.blackColor,
-                fontSize: 18,
+                fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -185,7 +234,10 @@ class _HotelFacilityPageState extends State<HotelFacilityPage> {
                 checkColor: AppColors.whiteColor,
                 selectedTileColor: AppColors.blackColor,
                 controlAffinity: ListTileControlAffinity.trailing,
-                title: Text(amenities.elementAt(index)),
+                title: Text(
+                  amenities.elementAt(index),
+                  style: const TextStyle(fontSize: 18),
+                ),
                 value: checkAmenities.elementAt(index),
                 onChanged: (value) {
                   setState(() {
@@ -202,7 +254,7 @@ class _HotelFacilityPageState extends State<HotelFacilityPage> {
               'Price',
               style: TextStyle(
                 color: AppColors.blackColor,
-                fontSize: 18,
+                fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -226,7 +278,8 @@ class _HotelFacilityPageState extends State<HotelFacilityPage> {
             Center(
               child: Text(
                 '\$${price.toInt()}',
-                style: const TextStyle(color: AppColors.subTextColor),
+                style: const TextStyle(
+                    color: AppColors.subTextColor, fontSize: 18),
               ),
             ),
           ],

@@ -6,6 +6,7 @@ import 'package:vivudi/resources/app_color.dart';
 import '../../../components/hotel_facility_page.dart';
 import '../../../components/hotel_image_page.dart';
 import '../../../components/hotel_info_page.dart';
+import '../../../utils/dialog.dart';
 
 class AddHotelPage extends StatefulWidget {
   const AddHotelPage({Key? key}) : super(key: key);
@@ -44,6 +45,12 @@ class _AddHotelPageState extends State<AddHotelPage> {
         curve: Curves.easeInOut,
       );
     });
+  }
+
+  @override
+  void initState() {
+    bloc.onInit();
+    super.initState();
   }
 
   @override
@@ -109,7 +116,7 @@ class _AddHotelPageState extends State<AddHotelPage> {
                 child: Text(
                   index > 0 ? 'Back' : 'Cancel',
                   style: const TextStyle(
-                      color: AppColors.primaryColor, fontSize: 18),
+                      color: AppColors.primaryColor, fontSize: 15),
                 ),
               ),
               ElevatedButton(
@@ -117,8 +124,27 @@ class _AddHotelPageState extends State<AddHotelPage> {
                   if (index < 2) {
                     _nextPage();
                   } else {
-                    bloc.createHotel();
-                    bloc.back();
+                    showConfirmDialog(
+                      context,
+                      title: const Text(
+                        'Are you sure add \nthis post',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.center,
+                      ),
+                      onPositive: () => bloc.createHotel(),
+                      positive: const Text(
+                        'Yes',
+                        style: TextStyle(
+                            color: AppColors.primaryColor,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15),
+                      ),
+                      negative: const Text(
+                        'No',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 15),
+                      ),
+                    );
                   }
                 },
                 style: ElevatedButton.styleFrom(
@@ -132,7 +158,7 @@ class _AddHotelPageState extends State<AddHotelPage> {
                 child: Text(
                   index < 2 ? 'Next' : 'Add',
                   style: const TextStyle(
-                      color: AppColors.whiteColor, fontSize: 18),
+                      color: AppColors.whiteColor, fontSize: 15),
                 ),
               ),
             ],

@@ -29,6 +29,7 @@ class HomeBloc extends BlocBase {
 
   void showDetailRoom(Hotel hotel) async {
     await navigator.navigateTo(AppRoute.detailRoom, arguments: hotel.id);
+    Future.delayed(const Duration(seconds: 1));
     loadData();
   }
 }

@@ -24,59 +24,63 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 20.0, right: 20.0,top: 50.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          searchBar(bloc),
-          const SizedBox(
-            height: 30.0,
-          ),
-          const Text(
-            'All your post',
-            style: TextStyle(
-              color: AppColors.textColor,
-              fontWeight: FontWeight.bold,
+      padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+      child: NestedScrollView(
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+          return [
+            SliverAppBar(
+              expandedHeight: 150.0,
+              backgroundColor: AppColors.whiteColor,
+              floating: true,
+              flexibleSpace: FlexibleSpaceBar(
+                background: SafeArea(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: const [
+                      Text(
+                        'All your post\n',
+                        style: TextStyle(
+                          color: AppColors.textColor,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20
+                        ),
+                      ),
+                      Text(
+                        'Hosting your home to become an entrepreneur and laid down a path to financial freedom.',
+                        softWrap: true,
+                        style: TextStyle(
+                          color: AppColors.subTextColor,
+                          fontSize: 18
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ),
-          ),
-          const SizedBox(
-            height: 10.0,
-          ),
-          const Text(
-            'Hosting your home to become an entrepreneur and laid down a path to financial freedom.',
-            style: TextStyle(
-              color: AppColors.subTextColor,
-            ),
-          ),
-          const SizedBox(
-            height: 20.0,
-          ),
-          
-          Expanded(
-            child: StreamBuilder<List<Hotel>>(
-              stream: bloc.hotels.stream,
-              builder: (_, snapshot) {
-                if (!snapshot.hasData) {
-                  return const Center(
-                      child: CircularProgressIndicator(
-                    color: AppColors.primaryColor,
-                  ));
-                } else {
-                  List<Hotel> list = snapshot.data!;
-                  return ListView.builder(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20.0, vertical: 10.0),
-                    itemCount: list.length,
-                    itemBuilder: (_, index) => HotelCardView(
-                      hotel: list.elementAt(index),
-                      onPress: () => bloc.showDetailRoom(list.elementAt(index)),
-                    ),
-                  );
-                }
-              },
-            ),
-          ),
-        ],
+          ];
+        },
+        body: StreamBuilder<List<Hotel>>(
+          stream: bloc.hotels.stream,
+          builder: (_, snapshot) {
+            if (!snapshot.hasData) {
+              return const Center(
+                  child: CircularProgressIndicator(
+                color: AppColors.primaryColor,
+              ));
+            } else {
+              List<Hotel> list = snapshot.data!;
+              return ListView.builder(
+                padding: const EdgeInsets.only(bottom: 50.0),
+                itemCount: list.length,
+                itemBuilder: (_, index) => HotelCardView(
+                  hotel: list.elementAt(index),
+                  onPress: () => bloc.showDetailRoom(list.elementAt(index)),
+                ),
+              );
+            }
+          },
+        ),
       ),
     );
   }

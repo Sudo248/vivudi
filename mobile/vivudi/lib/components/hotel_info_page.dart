@@ -3,10 +3,7 @@ import 'package:vivudi/config/constant.dart';
 import 'package:vivudi/resources/app_color.dart';
 
 class HotelInfoPage extends StatefulWidget {
-  final String? roomType;
-  final String? address;
-  final String? describe;
-  const HotelInfoPage({Key? key, this.roomType, this.address, this.describe})
+  const HotelInfoPage({Key? key})
       : super(key: key);
 
   @override
@@ -20,15 +17,9 @@ class _HotelInfoPageState extends State<HotelInfoPage> {
 
   @override
   void initState() {
-    if (widget.roomType != null) {
-      roomTypeC.text = widget.roomType!;
-    }
-    if (widget.address != null) {
-      addressC.text = widget.address!;
-    }
-    if (widget.describe != null) {
-      describeC.text = widget.describe!;
-    }
+    roomTypeC.text = Constant.roomType;
+    addressC.text = Constant.address;
+    describeC.text = Constant.description;
     super.initState();
   }
 
@@ -44,7 +35,7 @@ class _HotelInfoPageState extends State<HotelInfoPage> {
               "Room Type",
               style: TextStyle(
                   color: AppColors.blackColor,
-                  fontSize: 18,
+                  fontSize: 20,
                   fontWeight: FontWeight.bold),
             ),
             const SizedBox(
@@ -56,7 +47,9 @@ class _HotelInfoPageState extends State<HotelInfoPage> {
               onChanged: (text) {
                 Constant.roomType = text;
               },
+              style: const TextStyle(fontSize: 18),
               decoration: const InputDecoration(
+              
                 border: OutlineInputBorder(),
                 hintText: 'Flora Pool Villa',
                 focusedBorder: OutlineInputBorder(
@@ -72,7 +65,7 @@ class _HotelInfoPageState extends State<HotelInfoPage> {
               "Address",
               style: TextStyle(
                 color: AppColors.blackColor,
-                fontSize: 18,
+                fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -81,6 +74,7 @@ class _HotelInfoPageState extends State<HotelInfoPage> {
             ),
             TextFormField(
               controller: addressC,
+              style: const TextStyle(fontSize: 18),
               cursorColor: AppColors.primaryColor,
               onChanged: (text) {
                 Constant.address = text;
@@ -101,7 +95,7 @@ class _HotelInfoPageState extends State<HotelInfoPage> {
               "Describe",
               style: TextStyle(
                 color: AppColors.blackColor,
-                fontSize: 18,
+                fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -112,6 +106,7 @@ class _HotelInfoPageState extends State<HotelInfoPage> {
               controller: describeC,
               maxLines: 10,
               minLines: 10,
+              style: const TextStyle(fontSize: 18),
               keyboardType: TextInputType.multiline,
               cursorColor: AppColors.primaryColor,
               onChanged: (text) {

@@ -7,6 +7,7 @@ import 'package:vivudi/resources/app_color.dart';
 import '../../../components/hotel_facility_page.dart';
 import '../../../components/hotel_image_page.dart';
 import '../../../components/hotel_info_page.dart';
+import '../../../utils/dialog.dart';
 
 class UpdateHotelPage extends StatefulWidget {
   final String hotelId;
@@ -108,7 +109,7 @@ class _UpdateHotelPageState extends State<UpdateHotelPage> {
                 child: Text(
                   index > 0 ? 'Back' : 'Cancel',
                   style: const TextStyle(
-                      color: AppColors.primaryColor, fontSize: 18),
+                      color: AppColors.primaryColor, fontSize: 15),
                 ),
               ),
               ElevatedButton(
@@ -116,8 +117,27 @@ class _UpdateHotelPageState extends State<UpdateHotelPage> {
                   if (index < 2) {
                     _nextPage();
                   } else {
-                    bloc.update();
-                    bloc.back();
+                    showConfirmDialog(
+                      context,
+                      title: const Text(
+                        'Are you sure to update \nthis post',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.center,
+                      ),
+                      onPositive: () => bloc.update(),
+                      positive: const Text(
+                        'Yes',
+                        style: TextStyle(
+                            color: AppColors.primaryColor,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15),
+                      ),
+                      negative: const Text(
+                        'No',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 15),
+                      ),
+                    );
                   }
                 },
                 style: ElevatedButton.styleFrom(
@@ -125,13 +145,14 @@ class _UpdateHotelPageState extends State<UpdateHotelPage> {
                   minimumSize: const Size(120.0, 40.0),
                   primary: AppColors.primaryColor,
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                      side: const BorderSide(color: AppColors.primaryColor)),
+                    borderRadius: BorderRadius.circular(20.0),
+                    side: const BorderSide(color: AppColors.primaryColor),
+                  ),
                 ),
                 child: Text(
                   index < 2 ? 'Next' : 'Update',
                   style: const TextStyle(
-                      color: AppColors.whiteColor, fontSize: 18),
+                      color: AppColors.whiteColor, fontSize: 15),
                 ),
               ),
             ],

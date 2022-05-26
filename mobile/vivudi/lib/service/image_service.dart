@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -47,18 +48,21 @@ class ImageService {
       if (image == null) {
         return null;
       }
+    } else {
+      image = File(pickImage.path);
     }
 
     if (storeImage != null) {
-      storeImage(image!);
+      storeImage(image);
     }
 
+    print(image.path);
     if (uploadImage != null) {
       if (compress) {
-        final imageCompress = await _compressImage(image!.path, 35);
+        final imageCompress = await _compressImage(image.path, 35);
         uploadImage(imageCompress);
       } else {
-        uploadImage(image!);
+        uploadImage(image);
       }
     }
 

@@ -20,6 +20,7 @@ class HotelRepository {
 
   Future<HotelResponse> createHotel(HotelRequest request) async {
     try {
+      setHeader();
       final response =
           await networkService.post(Constant.hotelUrl, data: request.toMap());
       final hotelResponse = HotelResponse.fromMap(response.data);
@@ -31,6 +32,7 @@ class HotelRepository {
 
   Future<HotelResponse> getHotel(String id) async {
     try {
+      setHeader();
       final response = await networkService.get(
         "${Constant.hotelUrl}/$id",
       );
@@ -45,6 +47,7 @@ class HotelRepository {
 
   Future<HotelResponse> updateHotel(String id, HotelRequest request) async {
     try {
+      setHeader();
       final response = await networkService.put('${Constant.hotelUrl}/$id',
           data: request.toMap());
       final hotelResponse = HotelResponse.fromMap(response.data);
@@ -56,8 +59,8 @@ class HotelRepository {
 
   Future<HotelResponse> deleteHotel(String id) async {
     try {
-      final response = await networkService
-          .delete('${Constant.hotelUrl}/$id');
+      setHeader();
+      final response = await networkService.delete('${Constant.hotelUrl}/$id');
 
       final hotelResponse = HotelResponse.fromMap(response.data);
       return hotelResponse;

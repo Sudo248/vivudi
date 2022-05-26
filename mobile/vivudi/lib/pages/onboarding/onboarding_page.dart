@@ -37,7 +37,7 @@ class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      body: _pages.elementAt(_index),
+      body: SafeArea(child: _pages.elementAt(_index)),
       floatingActionButton: SizedBox.square(
         dimension: size.width / 5.3,
         child: FittedBox(
@@ -56,8 +56,8 @@ class _OnboardingState extends State<Onboarding> with TickerProviderStateMixin {
           ItemBottomAppBar(icon: FaIcon(FontAwesomeIcons.circleUser,), label: "Profile"),
         ],
         currentIndex: _index,
-        isSelectedFontSize: 10,
-        unisSelectedFontSize: 8,
+        isSelectedFontSize: 14,
+        unisSelectedFontSize: 12,
         notchMargin: size.height / 120,
         iconSize: 16,
         height: size.height / 14,

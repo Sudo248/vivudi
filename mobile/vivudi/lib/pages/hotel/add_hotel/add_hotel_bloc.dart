@@ -6,6 +6,7 @@ import 'package:vivudi/repositories/hotel_repository.dart';
 
 import '../../../base/bloc_base.dart';
 import '../../../config/constant.dart';
+import '../../../model/hotel/hotel_response.dart';
 
 class AddHotelBloc extends BlocBase {
   @override
@@ -15,14 +16,14 @@ class AddHotelBloc extends BlocBase {
 
   @override
   void onInit() {
-    // TODO: implement onInit
+    Constant.resetHotel();
   }
 
   void back() => navigator.back();
 
-  void createHotel() {
+  void createHotel() async {
     log(Constant.price.toString());
-    GetIt.I<HotelRepository>().createHotel(
+    HotelResponse resp = await GetIt.I<HotelRepository>().createHotel(
       HotelRequest(
         image: Constant.image,
         roomType: Constant.roomType,
@@ -34,5 +35,9 @@ class AddHotelBloc extends BlocBase {
         price: Constant.price,
       ),
     );
+    if (resp.success) {
+      Constant.resetHotel();
+      navigator.back();
+    }
   }
 }
