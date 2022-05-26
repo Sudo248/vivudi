@@ -2,7 +2,7 @@ import '../model/hotel/hotel.dart';
 
 abstract class Constant {
   /// URL
-  static const baseUrl = "http://192.168.1.60:5000";
+  static const baseUrl = "http://192.168.1.18:5000";
   static const api = "/api/v1";
 
   static const userUrl = "$api/user";
@@ -19,7 +19,8 @@ abstract class Constant {
 
   // Info of current Hotel
   static String id = '';
-  static String image = 'https://himdeve.com/wp-content/uploads/2020/03/1_10_image_carousel_en.jpg';
+  static String image =
+      'https://chefjob.vn/wp-content/uploads/2020/04/homestay-duoc-nhieu-du-khach-lua-chon.jpg';
   static String roomType = '';
   static String address = '';
   static String description = '';

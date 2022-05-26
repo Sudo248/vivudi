@@ -57,6 +57,7 @@ class DetailHotel extends StatelessWidget {
               case ConnectionState.done:
                 Hotel hotel = (snapshot.data! as Hotel);
                 return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 0.8,
