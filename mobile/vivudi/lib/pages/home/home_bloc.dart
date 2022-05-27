@@ -10,7 +10,10 @@ import '../../routes/app_route.dart';
 
 class HomeBloc extends BlocBase {
   @override
-  void onDispose() {}
+  void onDispose() {
+    hotels.close();
+    noHotels.close();
+  }
 
   @override
   void onInit() {
@@ -18,11 +21,13 @@ class HomeBloc extends BlocBase {
   }
 
   BehaviorSubject<List<Hotel>> hotels = BehaviorSubject();
+  BehaviorSubject<int> noHotels = BehaviorSubject();
 
   Future<void> loadData() async {
     HotelsResponse resp = await GetIt.I<UserRepository>().getHotels();
     if (resp.success == true) {
       print(resp.hotels);
+      noHotels.sink.add(resp.hotels!.length);
       hotels.sink.add(resp.hotels!);
     }
   }
@@ -31,5 +36,11 @@ class HomeBloc extends BlocBase {
     await navigator.navigateTo(AppRoute.detailRoom, arguments: hotel.id);
     Future.delayed(const Duration(seconds: 1));
     loadData();
+  }
+
+  Future<List<Hotel>> getSuggestions(String pattern) async {
+    return hotels.value
+        .where((element) => element.roomType.contains(pattern))
+        .toList();
   }
 }

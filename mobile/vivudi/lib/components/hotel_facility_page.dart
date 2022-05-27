@@ -68,6 +68,7 @@ class _HotelFacilityPageState extends State<HotelFacilityPage> {
               height: 10.0,
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 ToggleButtons(
                   isSelected: bedrooms,
@@ -118,13 +119,23 @@ class _HotelFacilityPageState extends State<HotelFacilityPage> {
                               fontSize: 14, color: AppColors.primaryColor)),
                       positive:
                           const Text('Submit', style: TextStyle(fontSize: 14)),
-                      title: const Text(
-                        'Number of \nbedrooms',
-                        style: TextStyle(fontSize: 14),
+                      title: const Center(
+                        child: Text(
+                          'Number of \nbedrooms',
+                          style: TextStyle(fontSize: 18),
+                        ),
                       ),
                       content: TextField(
                         controller: c1,
                         maxLength: 3,
+                        cursorColor: AppColors.primaryColor,
+                        decoration: const InputDecoration(
+                          isDense: true,
+                          hoverColor: AppColors.primaryColor,
+                          focusedBorder: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: AppColors.primaryColor)),
+                        ),
                         keyboardType: TextInputType.number,
                       ),
                       onPositive: () {
@@ -157,6 +168,7 @@ class _HotelFacilityPageState extends State<HotelFacilityPage> {
               height: 10.0,
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 ToggleButtons(
                   isSelected: bathrooms,
@@ -200,19 +212,43 @@ class _HotelFacilityPageState extends State<HotelFacilityPage> {
                 IconButton(
                   icon: const FaIcon(FontAwesomeIcons.plus),
                   onPressed: () {
-                    showConfirmDialog(context,
-                        negative: const Text('Submit'),
-                        title: const Text('Number of \nbathrooms'),
-                        content: TextField(
-                            controller: c2, keyboardType: TextInputType.number),
-                        onNegative: () {
-                      setState(() {
-                        bathrooms.fillRange(0, 4, false);
-                        bathrooms[3] = !bathrooms[3];
-                        bathroomsNum = c2.text;
-                        Constant.numberBathrooms = int.parse(bathroomsNum);
-                      });
-                    });
+                    showConfirmDialog(
+                      context,
+                      negative: const Text('Cancel',
+                          style: TextStyle(
+                              fontSize: 14, color: AppColors.primaryColor)),
+                      positive:
+                          const Text('Submit', style: TextStyle(fontSize: 14)),
+                      title: const Center(
+                        child: Text(
+                          'Number of \nbathrooms',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                      ),
+                      content: TextField(
+                        controller: c2,
+                        maxLength: 3,
+                        cursorColor: AppColors.primaryColor,
+                        decoration: const InputDecoration(
+                          isDense: true,
+                          hoverColor: AppColors.primaryColor,
+                          focusedBorder: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: AppColors.primaryColor)),
+                        ),
+                        keyboardType: TextInputType.number,
+                      ),
+                      onPositive: () {
+                        setState(
+                          () {
+                            bathrooms.fillRange(0, 4, false);
+                            bathrooms[3] = !bathrooms[3];
+                            bathroomsNum = c2.text;
+                            Constant.numberBathrooms = int.parse(bathroomsNum);
+                          },
+                        );
+                      },
+                    );
                   },
                 )
               ],

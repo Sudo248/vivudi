@@ -55,7 +55,7 @@ class HotelCardView extends StatelessWidget {
               ),
               const SizedBox(height: 5.0,),
               Text(
-                "\$${hotel.price}/night",
+                "\$${hotel.price.toInt()}/night",
                 style: const TextStyle(
                   color: AppColors.textColor,
                   fontSize: 18,

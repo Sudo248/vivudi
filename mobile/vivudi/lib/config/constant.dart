@@ -2,7 +2,7 @@ import '../model/hotel/hotel.dart';
 
 abstract class Constant {
   /// URL
-  static const baseUrl = "http://192.168.1.18:5000";
+  static const baseUrl = "http://10.0.2.2:5000";
   static const api = "/api/v1";
 
   static const userUrl = "$api/user";
